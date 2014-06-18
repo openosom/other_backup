@@ -1,0 +1,56 @@
+#! /bin/sh
+
+DIR=tiny210
+DIR2=linux-2.6.35.7
+PATCHESDIR=patches-diff
+
+mkdir -pv $PATCHESDIR
+echo "--- a\n+++ b\n@@ -0,0 +0,0 @@ \n############# NO CHANGE #############\n"> $PATCHESDIR/no-change-files.list
+echo "--- a\n+++ b\n@@ -0,0 +0,0 @@ \n############# ALL CHANGE #############\n"> $PATCHESDIR/all-change-files.list
+
+
+
+for SUBDIR in `ls $DIR/`; do
+
+################ dir ####################
+if [ -d $DIR/$SUBDIR ] ; then
+	echo "$SUBDIR"
+	mkdir -pv $PATCHESDIR/$SUBDIR
+
+for file in `ls $DIR/$SUBDIR` ; do
+#	echo "$DIR/$SUBDIR/$file.patch"
+	diff -Nur $DIR2/$SUBDIR/$file $DIR/$SUBDIR/$file > $PATCHESDIR/$SUBDIR/$file.patch
+
+        #if the patch file empty, then rm...
+	if [ ! -s $PATCHESDIR/$SUBDIR/$file.patch ] ; then
+		echo "$PATCHESDIR/$SUBDIR/$file.patch ...not changes"
+		echo "-$DIR"'/'"$SUBDIR"'/'"$file" >> $PATCHESDIR/no-change-files.list
+
+		rm $PATCHESDIR/$SUBDIR/$file.patch
+	fi
+done
+
+echo '#-----  /'"$DIR"'/'"$SUBDIR"'/' >> $PATCHESDIR/all-change-files.list
+ls -lh  $PATCHESDIR/$SUBDIR/ >>$PATCHESDIR/all-change-files.list
+
+
+
+################# file ###################
+else
+	echo "$DIR/$SUBDIR.patch"
+	diff -Nur $DIR2/$SUBDIR $DIR/$SUBDIR > $PATCHESDIR/$SUBDIR.patch
+
+        #if the patch file empty, then rm...
+        if [ ! -s $PATCHESDIR/$SUBDIR.patch ] ; then
+                echo "$PATCHESDIR/$SUBDIR.patch ...not changes"
+                echo "-$DIR"'/'"$SUBDIR" >> $PATCHESDIR/no-change-files.list
+
+                rm $PATCHESDIR/$SUBDIR.patch
+        fi
+
+fi
+
+done
+
+rm $PATCHESDIR/mini* $PATCHESDIR/tiny* $PATCHESDIR/COPY*
+

@@ -1,0 +1,28 @@
+diff -Nur packages_10.03.1//libs/libpam/Makefile packages//libs/libpam/Makefile
+--- packages_10.03.1//libs/libpam/Makefile	2012-06-03 22:48:32.819247757 +0800
++++ packages//libs/libpam/Makefile	2012-09-18 17:08:35.669182280 +0800
+@@ -12,7 +12,9 @@
+ PKG_RELEASE:=1
+ 
+ PKG_SOURCE:=Linux-PAM-$(PKG_VERSION).tar.bz2
+-PKG_SOURCE_URL:=@KERNEL/linux/libs/pam/library
++PKG_SOURCE_URL:=@KERNEL/linux/libs/pam/library \
++	http://mirror.linux.org.au/linux/libs/pam/library \
++	http://mirror.sit.wisc.edu/pub/linux/libs/pam/library
+ PKG_MD5SUM:=6db7fcb5db6253350e3a4648ceac40e7
+ PKG_INSTALL:=1
+ PKG_FIXUP:=libtool
+diff -Nur packages_10.03.1//libs/mysql/Makefile packages//libs/mysql/Makefile
+--- packages_10.03.1//libs/mysql/Makefile	2012-06-03 22:48:26.827247756 +0800
++++ packages//libs/mysql/Makefile	2012-06-05 01:28:18.365088211 +0800
+@@ -62,8 +62,8 @@
+         CXXFLAGS="$$$$CXXFLAGS -fno-builtin -fno-rtti -nostdinc++"  \
+         CPPFLAGS="$$$$CPPFLAGS -I$(STAGING_DIR)/usr/include/uClibc++" \
+         LDFLAGS="$$$$LDFLAGS" \
+-        LIBS="-nodefaultlibs -luClibc++ -lm $(LIBGCC_S)" \
+-        CLIENTCLIBS="-nodefaultlibs -luClibc++ -lm $(LIBGCC_S)" \
++        LIBS="-nodefaultlibs -lc -luClibc++ -lm $(LIBGCC_S)" \
++        CLIENTCLIBS="-nodefaultlibs -lc -luClibc++ -lm $(LIBGCC_S)" \
+ 
+ 
+ define Build/Configure

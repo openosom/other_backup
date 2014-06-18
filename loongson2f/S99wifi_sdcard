@@ -1,0 +1,32 @@
+#!/bin/sh -e
+
+#[ -e /home/yee/Desktop/hello ] \
+#	|| mkdir -pv /home/yee/Desktop/hello
+#
+#[ -e /home/yee/Desktop/hello ] \
+#	&& rm -rfv /home/yee/Desktop/hello
+
+## mount SD/MMC
+MOUNTPOINT=/home/yee/sdcard
+DEVICES=/dev/sda1
+
+[ -e $MOUNTPOINT ] \
+	|| mkdir -pv $MOUNTPOINT
+
+[ -e $DEVICES ] \
+	&& mount $DEVICES $MOUNTPOINT
+
+## power on wifi RTL8187B
+[ -e /sys/class/rfkill/rfkill0/state ] \
+	&& echo 1 > /sys/class/rfkill/rfkill0/state
+
+#ifconfig wlan0 up
+#iwlist wlan0 scanning | grep "ESSID"
+#iwconfig wlan0 essid "OpenUS"
+#iwconfig wlan0 key s:niyufeng526
+#iwconfig wlan0 ap auto
+#ifconfig wlan0 192.168.1.200 netmask 255.255.255.0
+#route add default gw 192.168.1.1
+#ifconfig wlan0 up && dhclient wlan0
+
+

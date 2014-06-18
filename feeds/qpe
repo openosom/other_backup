@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+# (C) 2008 openwrt.org
+
+START=96
+STOP=96
+
+start() {
+	[ -e /sys/class/leds/ ] && {
+		. /etc/tslib-env.sh
+		. /etc/qtopia-env.sh
+		ts_calibrate
+		qpe
+	}
+}
+
+stop() {
+	killall -9 qpe
+}
+

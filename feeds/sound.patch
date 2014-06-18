@@ -1,0 +1,20 @@
+diff -Nur packages_10.03.1//sound/flite/Makefile packages//sound/flite/Makefile
+--- packages_10.03.1//sound/flite/Makefile	2012-06-03 22:48:18.035247752 +0800
++++ packages//sound/flite/Makefile	2012-09-18 21:10:52.509184095 +0800
+@@ -48,14 +48,14 @@
+ 	$(INSTALL_DIR) $(1)/usr/include/flite
+ 	$(CP) $(PKG_INSTALL_DIR)/usr/include/flite/{cst,flite}*.h $(1)/usr/include/flite/
+ 	$(INSTALL_DIR) $(1)/usr/lib
+-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libflite*.so.* $(1)/usr/lib/
++	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libflite*.so* $(1)/usr/lib/
+ endef
+ 
+ define Package/flite/install
+ 	$(INSTALL_DIR) $(1)/usr/bin
+ 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/flite $(1)/usr/bin/
+ 	$(INSTALL_DIR) $(1)/usr/lib
+-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libflite*.so.* $(1)/usr/lib/
++	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libflite*.so* $(1)/usr/lib/
+ endef
+ 
+ $(eval $(call BuildPackage,flite))
